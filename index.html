@@ -1,55 +1,64 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Piątka bez limitu</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      background: #f5f5f5;
-      color: #222;
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
-    #game {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-    .row {
-      display: flex;
-      gap: 5px;
-    }
-    input.tile {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      text-align: center;
-      text-transform: uppercase;
-      border: 2px solid #ccc;
-      background: white;
-    }
-    .correct { background: #6aaa64; color: white; border-color: #6aaa64; }
-    .present { background: #c9b458; color: white; border-color: #c9b458; }
-    .absent { background: #787c7e; color: white; border-color: #787c7e; }
-    input:disabled {
-      background: #ddd;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra Piątka Bez Limitu</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Piątka bez limitu</h1>
-  <form id="game" autocomplete="off"></form>
-  <p id="message"></p>
-  <div id="stats">
-    <p>Wygrane: <span id="wins">0</span></p>
-    <p>Próby: <span id="attempts">0</span></p>
-    <pre id="guessStats"></pre>
-  </div>
-  <script src="script.js"></script>
+    <h1>Gra Piątka Bez Limitu</h1>
+    <div id="game">
+        <!-- Tabelka 5x6 do wpisywania słów -->
+        <div class="row">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+        </div>
+        <div class="row">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+        </div>
+        <div class="row">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+        </div>
+        <div class="row">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+        </div>
+        <div class="row">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+        </div>
+        <div class="row">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+            <input type="text" class="tile" maxlength="1">
+        </div>
+    </div>
+
+    <div id="message"></div>
+    <div id="wins">Wygrane: 0</div>
+    <div id="attempts">Próby: 0</div>
+    <div id="guessStats"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
