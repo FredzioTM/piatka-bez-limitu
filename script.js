@@ -8,12 +8,13 @@ let stats = JSON.parse(localStorage.getItem("stats")) || {
     attempts: 0,
     guessCounts: {}
 };
+
 updateStats();
 
 const maxAttempts = 6;
 let currentAttempt = 0;
 
-// Inicjalizacja wszystkich 6 rzędów
+// Tworzymy statyczną siatkę 6x5
 for (let i = 0; i < maxAttempts; i++) {
     const row = document.createElement("div");
     row.className = "row";
@@ -37,7 +38,6 @@ function handleInput(e) {
     const colIdx = parseInt(input.dataset.col);
     input.value = input.value.toUpperCase();
 
-    // Automatycznie przejdź do następnego pola
     if (input.value && colIdx < 4) {
         game.children[rowIdx].children[colIdx + 1].focus();
     }
@@ -103,7 +103,7 @@ function submitGuess() {
         return;
     }
 
-    // Włącz kolejny wiersz
+    // Włącz następny rząd
     const nextRow = game.children[currentAttempt];
     Array.from(nextRow.children).forEach(i => i.disabled = false);
     nextRow.children[0].focus();
