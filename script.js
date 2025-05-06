@@ -1,7 +1,7 @@
 // script.js
 
 const wordList = ["kotek", "piesek", "zamek", "lasem", "kwiat"];
-const secretWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+let secretWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
 const game = document.getElementById("game");
 const message = document.getElementById("message");
 const winsSpan = document.getElementById("wins");
@@ -9,7 +9,6 @@ const attemptsSpan = document.getElementById("attempts");
 const guessStats = document.getElementById("guessStats");
 
 let currentRow = 0;
-let currentCol = 0;
 let usedWords = new Set();
 
 function enableRow(rowIndex) {
@@ -43,12 +42,15 @@ function submitGuess() {
   const letterCount = {};
   for (const char of secretWord) letterCount[char] = (letterCount[char] || 0) + 1;
 
+  // Sprawdzenie trafionych liter
   for (let i = 0; i < 5; i++) {
     if (guess[i] === secretWord[i]) {
       colors[i] = "correct";
       letterCount[guess[i]]--;
     }
   }
+
+  // Sprawdzenie obecnych liter (ale nie w odpowiednich miejscach)
   for (let i = 0; i < 5; i++) {
     if (colors[i] === "correct") continue;
     if (secretWord.includes(guess[i]) && letterCount[guess[i]] > 0) {
@@ -67,16 +69,18 @@ function submitGuess() {
   });
 
   currentRow++;
-  currentCol = 0;
-
+  
   updateStats(guess === secretWord);
 
+  // Jeżeli zgadł, resetujemy grę
   if (guess === secretWord) {
     message.textContent = "Brawo! Odgadles slowo.";
+    resetGame();
   } else if (currentRow < 6) {
     enableRow(currentRow);
   } else {
     message.textContent = `Koniec gry. Haslo to: ${secretWord}`;
+    resetGame();
   }
 }
 
@@ -90,6 +94,25 @@ function updateStats(won) {
   winsSpan.textContent = getCookie("wins") || 0;
   attemptsSpan.textContent = getCookie("attempts") || 0;
   guessStats.textContent += `\n${currentRow}: ${won ? "wygrana" : "pudlo"}`;
+}
+
+function resetGame() {
+  // Resetujemy pola
+  const rows = game.querySelectorAll(".row");
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll(".tile");
+    inputs.forEach(input => {
+      input.value = "";
+      input.disabled = false;
+      input.classList.remove("correct", "present", "absent", "flip");
+    });
+  });
+
+  // Wylosowanie nowego słowa
+  secretWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+  currentRow = 0;
+  usedWords.clear();
+  enableRow(currentRow);
 }
 
 function setCookie(name, value, days) {
