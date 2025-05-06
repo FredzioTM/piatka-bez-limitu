@@ -1,64 +1,62 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gra Piątka Bez Limitu</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gra Literalnie</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Gra Piątka Bez Limitu</h1>
-    <div id="game">
-        <!-- Tabelka 5x6 do wpisywania słów -->
-        <div class="row">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-        </div>
-        <div class="row">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-        </div>
-        <div class="row">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-        </div>
-        <div class="row">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-        </div>
-        <div class="row">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-        </div>
-        <div class="row">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-            <input type="text" class="tile" maxlength="1">
-        </div>
+  <div id="game">
+    <div class="row">
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
     </div>
+    <div class="row">
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+    </div>
+    <div class="row">
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+    </div>
+    <div class="row">
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+    </div>
+    <div class="row">
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+    </div>
+    <div class="row">
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+      <input type="text" class="tile" maxlength="1" />
+    </div>
+  </div>
 
-    <div id="message"></div>
-    <div id="wins">Wygrane: 0</div>
-    <div id="attempts">Próby: 0</div>
-    <div id="guessStats"></div>
+  <div id="message"></div>
+  <div id="guessStats"></div>
 
-    <script src="script.js"></script>
+  <div>Wygrane: <span id="wins"></span></div>
+  <div>Próby: <span id="attempts"></span></div>
 </body>
 </html>
