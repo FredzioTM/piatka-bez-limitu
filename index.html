@@ -2,22 +2,18 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Piątka bez limitu</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Piątka bez limitu</h1>
-  <div>
-    <button id="submitGuess">Sprawdź</button>
-    <button id="toggleTheme">🌓</button>
-  </div>
-  <div id="board"></div>
+  <div id="game"></div>
   <p id="message"></p>
   <div id="stats">
     <p>Wygrane: <span id="wins">0</span></p>
     <p>Próby: <span id="attempts">0</span></p>
-    <pre id="guessStats" style="margin-top:1em;font-size:0.9em;"></pre>
+    <pre id="guessStats"></pre>
   </div>
   <script src="script.js"></script>
 </body>
