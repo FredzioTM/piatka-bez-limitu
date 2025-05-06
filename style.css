@@ -1,31 +1,123 @@
+/* styl.css */
+
 body {
-  font-family: sans-serif;
-  text-align: center;
-  background: #f5f5f5;
-  color: #222;
-}
-h1 {
-  margin-bottom: 10px;
-}
-#game {
-  display: grid;
-  gap: 5px;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
 }
-.row {
-  display: grid;
-  grid-template-columns: repeat(5, 50px);
-  gap: 5px;
+
+#game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
 }
+
 .tile {
   width: 50px;
   height: 50px;
+  margin: 5px;
   font-size: 24px;
+  text-align: center;
   line-height: 50px;
-  text-transform: uppercase;
   border: 2px solid #ccc;
-  background: white;
+  border-radius: 8px;
+  outline: none;
+  background-color: #fff;
+  transition: background-color 0.3s, transform 0.3s;
 }
-.correct { background: #6aaa64; color: white; border-color: #6aaa64; }
-.present { background: #c9b458; color: white; border-color: #c9b458; }
-.absent { background: #787c7e; color: white; border-color: #787c7e; }
+
+.tile.correct {
+  background-color: #6aaa64;
+  color: white;
+}
+
+.tile.present {
+  background-color: #c9b458;
+  color: white;
+}
+
+.tile.absent {
+  background-color: #787c7e;
+  color: white;
+}
+
+.tile:focus {
+  border-color: #3a3a3c;
+  transform: scale(1.1);
+}
+
+.tile.flip {
+  animation: flip 0.6s ease;
+}
+
+@keyframes flip {
+  0% { transform: rotateY(0); }
+  50% { transform: rotateY(90deg); }
+  100% { transform: rotateY(0); }
+}
+
+#keyboard {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 8px;
+  max-width: 500px;
+  margin-bottom: 40px;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 18px;
+  background-color: #f1f1f1;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #ddd;
+  transform: scale(1.1);
+}
+
+button:active {
+  background-color: #bbb;
+}
+
+#message {
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+#wins, #attempts {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+/* Tryb ciemny */
+body.dark {
+  background-color: #121213;
+  color: #f5f5f5;
+}
+
+body.dark .tile {
+  background-color: #3a3a3c;
+  border-color: #444;
+}
+
+body.dark button {
+  background-color: #333;
+  color: #f5f5f5;
+  border: 2px solid #444;
+}
+
+body.dark button:hover {
+  background-color: #444;
+}
