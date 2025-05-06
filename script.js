@@ -32,56 +32,71 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('toggleTheme').addEventListener('click', toggleTheme);
 });
 
-let currentAttempt = 1;
+
+let currentAttempt = 0;
 
 function newRound() {
     currentWord = allowedWords[Math.floor(Math.random() * allowedWords.length)].toUpperCase();
-    document.getElementById('guessInput').value = '';
-    document.getElementById('board').innerHTML = '';
+    const board = document.getElementById('board');
+    board.innerHTML = '';
     document.getElementById('message').textContent = '';
-    currentAttempt = 1;
+    for (let i = 0; i < 5; i++) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        for (let j = 0; j < 5; j++) {
+            const input = document.createElement('input');
+            input.className = 'tile';
+            input.maxLength = 1;
+            input.dataset.row = i;
+            input.dataset.col = j;
+            row.appendChild(input);
+        }
+        board.appendChild(row);
+    }
+    currentAttempt = 0;
 }
 
 function checkGuess() {
-    const input = document.getElementById('guessInput').value.toUpperCase();
-    if (input.length !== 5 || !allowedWords.includes(input.toLowerCase())) {
+    if (currentAttempt >= 5) return;
+
+    const rowInputs = document.querySelectorAll(`input[data-row='${currentAttempt}']`);
+    const guess = Array.from(rowInputs).map(input => input.value.toUpperCase()).join('');
+
+    if (guess.length !== 5 || !allowedWords.includes(guess.toLowerCase())) {
         document.getElementById('message').textContent = 'Nieprawidłowe słowo.';
         return;
     }
 
-    document.getElementById('message').textContent = '';
-    const board = document.getElementById('board');
-    for (let i = 0; i < 5; i++) {
-        const tile = document.createElement('div');
-        tile.className = 'tile';
-        tile.textContent = input[i];
-        if (input[i] === currentWord[i]) {
-            tile.classList.add('correct');
-        } else if (currentWord.includes(input[i])) {
-            tile.classList.add('present');
+    rowInputs.forEach((input, i) => {
+        if (guess[i] === currentWord[i]) {
+            input.classList.add('correct');
+        } else if (currentWord.includes(guess[i])) {
+            input.classList.add('present');
         } else {
-            tile.classList.add('absent');
+            input.classList.add('absent');
         }
-        board.appendChild(tile);
-    }
+        input.disabled = true;
+    });
 
     stats.attempts++;
 
-    if (input === currentWord) {
+    if (guess === currentWord) {
         stats.wins++;
-        stats.guessCounts[currentAttempt] = (stats.guessCounts[currentAttempt] || 0) + 1;
+        stats.guessCounts[currentAttempt + 1] = (stats.guessCounts[currentAttempt + 1] || 0) + 1;
         document.getElementById('message').textContent = 'Brawo! Odgadłeś słowo.';
         saveStats();
         updateStats();
         setTimeout(newRound, 2000);
     } else {
         currentAttempt++;
+        if (currentAttempt === 5) {
+            document.getElementById('message').textContent = 'Przegrałeś. Hasło to: ' + currentWord;
+        }
         saveStats();
         updateStats();
     }
 }
-
-function saveStats() {
+ {
     setCookie('wins', stats.wins);
     setCookie('attempts', stats.attempts);
     setCookie('guessCounts', JSON.stringify(stats.guessCounts));
