@@ -1,141 +1,114 @@
-function setCookie(name, value, days = 365) {
-    const expires = new Date(Date.now() + days * 86400000).toUTCString();
-    document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=/";
-}
+const allowedWords = ["słowo", "testy", "zebra", "klucz", "mapka", "brama", "domek", "kwiat", "rysuj", "dzika"];
+let secret = allowedWords[Math.floor(Math.random() * allowedWords.length)].toUpperCase();
+let currentRow = [];
+let currentRowIndex = 0;
 
-function getCookie(name) {
-    const value = document.cookie.match("(^|;)\s*" + name + "\s*=\s*([^;]+)");
-    return value ? decodeURIComponent(value.pop()) : null;
-}
+const game = document.getElementById("game");
+const message = document.getElementById("message");
 
-let stats = {
-    wins: parseInt(getCookie('wins')) || 0,
-    attempts: parseInt(getCookie('attempts')) || 0,
-    guessCounts: JSON.parse(getCookie('guessCounts') || '{}')
+let stats = JSON.parse(localStorage.getItem("stats")) || {
+    wins: 0,
+    attempts: 0,
+    guessCounts: {}
 };
+updateStats();
 
-let currentWord = '';
-let allowedWords = [];
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('wins').textContent = stats.wins;
-    document.getElementById('attempts').textContent = stats.attempts;
-
-    fetch('slowa.json')
-        .then(res => res.json())
-        .then(data => {
-            allowedWords = data;
-            newRound();
-        });
-
-    document.getElementById('submitGuess').addEventListener('click', checkGuess);
-    document.getElementById('toggleTheme').addEventListener('click', toggleTheme);
-});
-
-
-let currentAttempt = 0;
-
-function newRound() {
-    currentWord = allowedWords[Math.floor(Math.random() * allowedWords.length)].toUpperCase();
-    const board = document.getElementById('board');
-    board.innerHTML = '';
-    document.getElementById('message').textContent = '';
+function createRow() {
+    const row = document.createElement("div");
+    row.className = "row";
     for (let i = 0; i < 5; i++) {
-        const row = document.createElement('div');
-        row.className = 'row';
-        for (let j = 0; j < 5; j++) {
-            const input = document.createElement('input');
-            input.className = 'tile';
-            input.maxLength = 1;
-            input.dataset.row = i;
-            input.dataset.col = j;
-            row.appendChild(input);
-        }
-        board.appendChild(row);
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        row.appendChild(tile);
     }
-    currentAttempt = 0;
+    game.appendChild(row);
 }
 
-function checkGuess() {
-    if (currentAttempt >= 5) return;
+function getCurrentTiles() {
+    return document.querySelectorAll(`.row:nth-child(${currentRowIndex + 1}) .tile`);
+}
 
-    const rowInputs = document.querySelectorAll(`input[data-row='${currentAttempt}']`);
-    const guess = Array.from(rowInputs).map(input => input.value.toUpperCase()).join('');
+function updateRow() {
+    const tiles = getCurrentTiles();
+    tiles.forEach((tile, i) => {
+        tile.textContent = currentRow[i] || "";
+    });
+}
 
-    if (guess.length !== 5 || !allowedWords.includes(guess.toLowerCase())) {
-        document.getElementById('message').textContent = 'Nieprawidłowe słowo.';
+function submitGuess() {
+    if (currentRow.length < 5) return;
+
+    const guess = currentRow.join("");
+    if (!allowedWords.includes(guess.toLowerCase())) {
+        message.textContent = "Nieprawidłowe słowo.";
         return;
     }
 
-    rowInputs.forEach((input, i) => {
-        if (guess[i] === currentWord[i]) {
-            input.classList.add('correct');
-        } else if (currentWord.includes(guess[i])) {
-            input.classList.add('present');
-        } else {
-            input.classList.add('absent');
+    const tiles = getCurrentTiles();
+    const letterCount = {};
+    for (let char of secret) letterCount[char] = (letterCount[char] || 0) + 1;
+
+    currentRow.forEach((char, i) => {
+        if (secret[i] === char) {
+            tiles[i].classList.add("correct");
+            letterCount[char]--;
         }
-        input.disabled = true;
+    });
+
+    currentRow.forEach((char, i) => {
+        if (secret[i] !== char) {
+            if (secret.includes(char) && letterCount[char] > 0) {
+                tiles[i].classList.add("present");
+                letterCount[char]--;
+            } else {
+                tiles[i].classList.add("absent");
+            }
+        }
     });
 
     stats.attempts++;
-
-    if (guess === currentWord) {
+    if (guess === secret) {
+        message.textContent = "Brawo! Odgadłeś hasło!";
         stats.wins++;
-        stats.guessCounts[currentAttempt + 1] = (stats.guessCounts[currentAttempt + 1] || 0) + 1;
-        document.getElementById('message').textContent = 'Brawo! Odgadłeś słowo.';
+        stats.guessCounts[currentRowIndex + 1] = (stats.guessCounts[currentRowIndex + 1] || 0) + 1;
         saveStats();
-        updateStats();
-        setTimeout(newRound, 2000);
-    } else {
-        currentAttempt++;
-        if (currentAttempt === 5) {
-            document.getElementById('message').textContent = 'Przegrałeś. Hasło to: ' + currentWord;
-        }
-        saveStats();
-        updateStats();
+        return;
     }
+
+    currentRow = [];
+    currentRowIndex++;
+    createRow();
+    updateStats();
+    saveStats();
 }
- {
-    setCookie('wins', stats.wins);
-    setCookie('attempts', stats.attempts);
-    setCookie('guessCounts', JSON.stringify(stats.guessCounts));
+
+function saveStats() {
+    localStorage.setItem("stats", JSON.stringify(stats));
 }
 
 function updateStats() {
-    document.getElementById('wins').textContent = stats.wins;
-    document.getElementById('attempts').textContent = stats.attempts;
-    renderGuessStats();
-}
-
-function renderGuessStats() {
-    const statsDiv = document.getElementById('guessStats');
-    if (!statsDiv) return;
-
-    const guessCounts = stats.guessCounts;
-    let totalGuesses = 0;
-    let totalAttempts = 0;
-    let maxCount = 0;
-
-    for (const turn in guessCounts) {
-        const count = guessCounts[turn];
-        totalGuesses += count;
-        totalAttempts += count * parseInt(turn);
-        if (count > maxCount) maxCount = count;
-    }
-
-    const average = totalGuesses ? (totalAttempts / totalGuesses).toFixed(2) : '—';
-    let chart = '';
-
+    document.getElementById("wins").textContent = stats.wins;
+    document.getElementById("attempts").textContent = stats.attempts;
+    let text = "";
     for (let i = 1; i <= 10; i++) {
-        const count = guessCounts[i] || 0;
-        const bar = '▇'.repeat((count / maxCount * 20) || 0);
-        chart += `${i}. ${bar} (${count})\n`;
+        if (stats.guessCounts[i]) {
+            text += `${i} próba: ${stats.guessCounts[i]}\n`;
+        }
     }
-
-    statsDiv.textContent = `Średnia liczba prób: ${average}\n\nRozkład trafień:\n${chart}`;
+    document.getElementById("guessStats").textContent = text;
 }
 
-function toggleTheme() {
-    document.body.classList.toggle('dark');
-}
+document.addEventListener("keydown", (e) => {
+    message.textContent = "";
+    if (e.key === "Enter") {
+        submitGuess();
+    } else if (e.key === "Backspace") {
+        currentRow.pop();
+        updateRow();
+    } else if (/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]$/.test(e.key) && currentRow.length < 5) {
+        currentRow.push(e.key.toUpperCase());
+        updateRow();
+    }
+});
+
+for (let i = 0; i < 5; i++) createRow();
