@@ -49,7 +49,6 @@ function submitGuess() {
       letterCount[guess[i]]--;
     }
   }
-
   // Sprawdzenie obecnych liter (ale nie w odpowiednich miejscach)
   for (let i = 0; i < 5; i++) {
     if (colors[i] === "correct") continue;
