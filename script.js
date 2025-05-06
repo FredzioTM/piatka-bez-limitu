@@ -104,56 +104,6 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-function createKeyboard() {
-  const keyboardLayout = [
-    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["Enter", "Z", "X", "C", "V", "B", "N", "M", "←"]
-  ];
-  const keyboard = document.createElement("div");
-  keyboard.id = "keyboard";
-  keyboard.style.marginTop = "20px";
-
-  keyboardLayout.forEach(row => {
-    const rowDiv = document.createElement("div");
-    row.forEach(key => {
-      const keyButton = document.createElement("button");
-      keyButton.textContent = key;
-      keyButton.style.margin = "3px";
-      keyButton.style.padding = "10px";
-      keyButton.style.fontSize = "16px";
-      keyButton.addEventListener("click", () => handleKeyboardInput(key));
-      rowDiv.appendChild(keyButton);
-    });
-    keyboard.appendChild(rowDiv);
-  });
-
-  document.body.appendChild(keyboard);
-}
-
-function handleKeyboardInput(key) {
-  const row = game.children[currentRow].querySelectorAll(".tile");
-  if (key === "Enter") {
-    submitGuess();
-  } else if (key === "←") {
-    for (let i = 4; i >= 0; i--) {
-      if (row[i].value !== "") {
-        row[i].value = "";
-        row[i].focus();
-        break;
-      }
-    }
-  } else if (/^[A-Z]$/.test(key)) {
-    for (let i = 0; i < 5; i++) {
-      if (row[i].value === "") {
-        row[i].value = key;
-        if (i < 4) row[i + 1].focus();
-        break;
-      }
-    }
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   enableRow(currentRow);
   winsSpan.textContent = getCookie("wins") || 0;
@@ -165,6 +115,4 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.color = '#f5f5f5';
     document.querySelectorAll('.tile').forEach(tile => tile.style.backgroundColor = '#3a3a3c');
   }
-
-  createKeyboard();
 });
