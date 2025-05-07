@@ -12,7 +12,6 @@ let toggleThemeButton = document.getElementById("toggle-theme");
 function drawBoard() {
     gameBoard.innerHTML = `Zgadnij słowo: ${currentWord}`;
 }
-
 // Funkcja sprawdzająca wpisane słowo
 function checkWord() {
     const inputWord = wordInput.value.toLowerCase();
