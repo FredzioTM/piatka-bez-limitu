@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,15 +7,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Piątka bez limitu</h1>
-  <div id="stats">
-    <div>Wygrane: <span id="wins">0</span></div>
-    <div>Rozgrywki: <span id="attempts">0</span></div>
-  </div>
-  <div id="game"></div>
-  <div id="keyboard"></div>
-  <pre id="guessStats"></pre>
-  <div id="message"></div>
+  <header>
+    <h1>Piątka bez limitu</h1>
+    <button id="themeToggle">🌙</button>
+  </header>
+  <main>
+    <div id="game" class="board"></div>
+    <div id="keyboard" class="keyboard"></div>
+    <div id="message" class="message"></div>
+    <div id="stats">
+      Wygrane: <span id="wins">0</span><br />
+      Próby: <span id="attempts">0</span><br />
+      <pre id="guessStats"></pre>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
