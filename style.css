@@ -1,89 +1,73 @@
-/* style.css */
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background-color: #121213;
+  color: white;
+  text-align: center;
   margin: 0;
+  padding: 1em;
 }
-
 #game {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.5em;
+  margin-bottom: 1em;
 }
-
 .row {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
+  gap: 0.5em;
 }
-
 .tile {
-  width: 50px;
-  height: 50px;
+  width: 3em;
+  height: 3em;
+  font-size: 2em;
   text-align: center;
-  font-size: 24px;
-  border: 2px solid #333;
-  border-radius: 5px;
-  background-color: #e0e0e0;
-  transition: all 0.3s ease;
-}
-
-.tile.correct {
-  background-color: green;
+  text-transform: uppercase;
+  background-color: #3a3a3c;
   color: white;
+  border: none;
+  border-radius: 0.25em;
 }
-
-.tile.present {
-  background-color: yellow;
-  color: black;
+.correct {
+  background-color: #538d4e !important;
 }
-
-.tile.absent {
-  background-color: gray;
+.present {
+  background-color: #b59f3b !important;
+}
+.absent {
+  background-color: #3a3a3c !important;
+}
+.key {
+  padding: 0.5em 1em;
+  margin: 0.2em;
+  font-size: 1em;
+  border-radius: 0.25em;
+  border: none;
+  background-color: #818384;
   color: white;
+  cursor: pointer;
 }
-
-.tile:focus {
-  outline: none;
-  background-color: #f5f5f5;
-  border-color: #000;
+.key.correct {
+  background-color: #538d4e;
 }
-
+.key.present {
+  background-color: #b59f3b;
+}
+.key.absent {
+  background-color: #3a3a3c;
+}
+.keyboard-row {
+  margin-bottom: 0.5em;
+}
+.key.wide {
+  min-width: 6em;
+}
+#stats {
+  margin-bottom: 1em;
+}
 #message {
-  text-align: center;
-  font-size: 18px;
-  margin: 20px 0;
-}
-
-#guessStats {
-  font-size: 14px;
-  text-align: center;
-}
-
-#wins, #attempts {
+  margin-top: 1em;
   font-weight: bold;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #121213;
-    color: #f5f5f5;
-  }
-  .tile {
-    background-color: #3a3a3c;
-    color: #f5f5f5;
-    border-color: #f5f5f5;
-  }
-  .tile:focus {
-    background-color: #555;
-  }
+  color: #ffcc00;
 }

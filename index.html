@@ -1,62 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gra Literalnie</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Piątka bez limitu</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="game">
-    <div class="row">
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-    </div>
-    <div class="row">
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-    </div>
-    <div class="row">
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-    </div>
-    <div class="row">
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-    </div>
-    <div class="row">
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-    </div>
-    <div class="row">
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-      <input type="text" class="tile" maxlength="1" />
-    </div>
+  <h1>Piątka bez limitu</h1>
+  <div id="stats">
+    <div>Wygrane: <span id="wins">0</span></div>
+    <div>Rozgrywki: <span id="attempts">0</span></div>
   </div>
-
+  <div id="game"></div>
+  <div id="keyboard"></div>
+  <pre id="guessStats"></pre>
   <div id="message"></div>
-  <div id="guessStats"></div>
-
-  <div>Wygrane: <span id="wins"></span></div>
-  <div>Próby: <span id="attempts"></span></div>
+  <script src="script.js"></script>
 </body>
 </html>
